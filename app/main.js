@@ -21,12 +21,26 @@ var firebase = require('nativescript-plugin-firebase')
 
 firebase.init({projectId: 'send-foodz-1a677'}).then(
   function(inst) {
-    console.log("firebase initialized!")
+    console.log("firebase initialized!");
+    firebase.firestore
+                .collection("Orders")
+                .where("quantity", ">=", "6").where("quantity", "<=", "15")
+                .get()
+                .then(snapshot => {
+                    snapshot.forEach(document => {
+                        console.log(document.data());
+                    });
+                });
   },
   function(err) {
    console.log("firebase init error: ", err) 
   }
 )
+
+Vue.registerElement(
+  'CardView',
+  () => require('@nstudio/nativescript-cardview').CardView
+);
 
 new Vue({
   store,

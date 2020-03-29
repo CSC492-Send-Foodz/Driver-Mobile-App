@@ -11,9 +11,6 @@ export default new Vuex.Store({
 
   },
   actions: {
-		//bindOrders: firestoreAction(({ bindFirestoreRef}, quantity) => {
-		//	bindFirestoreRef('inventoryItems',
-    //  firebase.firestore().collection("Orders").where("quantity", ">=", quantity).where("quantity", "<=", quantity))
-		//}),
+
   }
 });

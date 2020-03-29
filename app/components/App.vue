@@ -27,16 +27,24 @@
                         <Label textWrap="true" text="Inventory Info"
                             class="h2 description-label" />
 
-                        <CardView v-bind:key="item" v-for="item in items" class="card" elevation="40" radius="10" ios:shadowRadius="3">
-                            <StackLayout class="card-layout">
-                                <Label class="body" :text="item.to" />
-                                <Label class="body" textWrap="true" :text="item.from" />
-                                <Label class="body" textWrap="true" :text="item.quantity" />
-                            </StackLayout>
-                        </CardView>
-
-                        <Button text="Select" @tap="onButtonTap" />
-
+                        <GridLayout rows="*" columns="*, *"  v-for="i in rowCount" :key="i">
+                            <CardView class="card" margin="10" col="0" radius="6" elevation="20" v-if="Items[(i - 1) * itemsPerRow] && Items[(i - 1) * itemsPerRow ].name" >
+                                <GridLayout class="card-layout" rows="120, auto,auto,auto" columns="*, *, *">
+                                    <Label :text="Items[(i - 1) * itemsPerRow].foodBankId" class="" row="1" colSpan="3" />
+                                    <Label :text="Items[(i - 1) * itemsPerRow].groceryStoreId" class="" row="2" colSpan="3" />
+                                    <Label :text="Items[(i - 1) * itemsPerRow].quantity" class="" row="2" colSpan="3" />
+                                    <Button row="3" colSpan="3" text="Select" class="btn m-t-20 add-button" />
+                                </GridLayout>
+                            </CardView>
+                            <CardView class="card" margin="10" col="1" elevation="20" v-if="Items[(i - 1) * itemsPerRow +1] && Items[(i - 1) * itemsPerRow +1].name" >
+                                <GridLayout class="card-layout" rows="120, auto,auto,auto" columns="*, *, *">
+                                    <Label :text="Items[(i - 1) * itemsPerRow].foodBankId" class="" row="1" colSpan="3" />
+                                    <Label :text="Items[(i - 1) * itemsPerRow].groceryStoreId" class="" row="2" colSpan="3" />
+                                    <Label :text="Items[(i - 1) * itemsPerRow].quantity" class="" row="2" colSpan="3" />
+                                    <Button row="3" colSpan="3" text="Select" class="btn m-t-20 add-button" />
+                                </GridLayout>
+                            </CardView>
+                    </GridLayout>
 
                     </StackLayout>
                 </ScrollView>
@@ -62,27 +70,42 @@
 
 <script >
     import Vue from 'nativescript-vue';
-
-    Vue.registerElement(
-        'CardView',
-        () => require('@nstudio/nativescript-cardview').CardView
-    );
+    import firebase from "nativescript-plugin-firebase";
 
     export default {
-        methods: {
-            onButtonTap() {
-                this.textFieldValue = 'Button was pressed';
-            }
-        },
-
         data() {
             return {
                 textFieldValue: "",
-                items: [
-                    { to: "Foodbasic", from: "Red Cross", quantity: "15" },
-                    { to: "Metro", from: "Salvation Army", quantity: "7" },
-                ]
+                Items: [
+                ],
+                itemsPerRow:2
             };
+        },
+        created() {
+            let that = this
+            firebase.firestore
+                .collection("Orders")
+                .where("quantity", ">=", "6").where("quantity", "<=", "15")
+                .get()
+                .then(snapshot => {
+                    let itemArr = [];
+                    snapshot.forEach(document => {
+                        itemArr.push(document.data());
+                    });
+                    console.log(document.data());
+                    that.Items = itemArr
+                });
+        },
+        
+        computed: {
+            rowCount: function() {
+                return Math.ceil(this.Items.length / this.itemsPerRow);
+            },
+        },        
+        methods: {
+                onButtonTap() {
+                    this.textFieldValue = 'Button was pressed';
+                }
         }
     };
 
@@ -90,7 +113,16 @@
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    @import '~@nativescript/theme/scss/variables/blue';
+    .add-button {
+        height: 30;
+        background-color: rgb(51, 51, 206);
+        color: white;
+        border-radius: 5;
+        font-size: 20;
+        font-weight: 600;
+    }
     ActionBar {
         background-color: #53ba82;
         color: #ffffff;
@@ -102,4 +134,14 @@
         font-size: 20;
         color: #333333;
     }
+
+    .card {
+    background-color: #fff;
+    color: #4d4d4d;
+    margin: 15;
+    }
+    .card-layout {
+        padding: 20;
+    }
+
 </style>
