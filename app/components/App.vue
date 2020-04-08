@@ -1,23 +1,22 @@
 <template>
-    <Page>
-        <ActionBar title="Welcome to NativeScript-Vue!" android:flat="true"/>
-        <TabView android:tabBackgroundColor="#53ba82"
+   <Page actionBarHidden="true">
+        <TabView android:tabBackgroundColor="#fbc59c"
                  android:tabTextColor="#c4ffdf"
                  android:selectedTabTextColor="#ffffff"
                  androidSelectedTabHighlightColor="#ffffff">
-            <TabViewItem title="Tab 1">
+            <TabViewItem title="Home">
                 <GridLayout columns="*" rows="*">
-                    <Label class="message" :text="msg" col="0" row="0"/>
+                    <Label class="message" text="Hello, driver!" col="0" row="0"/>
                 </GridLayout>
             </TabViewItem>
-            <TabViewItem title="Tab 2">
+            <TabViewItem title="Active Orders">
                 <GridLayout columns="*" rows="*">
-                    <Label class="message" text="Tab 2 Content" col="0" row="0"/>
+                    <Label class="message" text="See list of orders as cards here" col="0" row="0"/>
                 </GridLayout>
             </TabViewItem>
-            <TabViewItem title="Tab 3">
+            <TabViewItem title="Directions">
                 <GridLayout columns="*" rows="*">
-                    <Label class="message" text="Tab 3 Content" col="0" row="0"/>
+                    <Label class="message" text="Google map" col="0" row="0"/>
                 </GridLayout>
             </TabViewItem>
         </TabView>
