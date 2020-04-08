@@ -4,7 +4,7 @@
                  android:tabTextColor="#c4ffdf"
                  android:selectedTabTextColor="#ffffff"
                  androidSelectedTabHighlightColor="#ffffff">
-            <TabViewItem title="Home">
+            <TabViewItem title="Inventory Info">
                 <!--
                 <GridLayout columns="*" rows="*">
                     <Label class="message" text="Hello, driver!" col="0" row="0"/>
@@ -13,39 +13,17 @@
                 <ScrollView>
                     <StackLayout class="home-panel">
                         <!--Add your page content here-->
-                        <Label textWrap="true" text="Vehicle Capacity"
-                            class="h2 description-label" />
-                        
-                        <Label textWrap="true" :text="this.textFieldValue"
-                            class="h2 description-label" />
-
-                        <TextField v-model="textFieldValue"
-                            hint="Enter your vehicle's capacity" />
-
-                        <Button text="Submit" @tap="onButtonTap" />
-
                         <Label textWrap="true" text="Inventory Info"
                             class="h2 description-label" />
-
-                        <GridLayout rows="*" columns="*, *"  v-for="i in rowCount" :key="i">
-                            <CardView class="card" margin="10" col="0" radius="6" elevation="20" v-if="Items[(i - 1) * itemsPerRow] && Items[(i - 1) * itemsPerRow ].name" >
-                                <GridLayout class="card-layout" rows="120, auto,auto,auto" columns="*, *, *">
-                                    <Label :text="Items[(i - 1) * itemsPerRow].foodBankId" class="" row="1" colSpan="3" />
-                                    <Label :text="Items[(i - 1) * itemsPerRow].groceryStoreId" class="" row="2" colSpan="3" />
-                                    <Label :text="Items[(i - 1) * itemsPerRow].quantity" class="" row="2" colSpan="3" />
-                                    <Button row="3" colSpan="3" text="Select" class="btn m-t-20 add-button" />
-                                </GridLayout>
-                            </CardView>
-                            <CardView class="card" margin="10" col="1" elevation="20" v-if="Items[(i - 1) * itemsPerRow +1] && Items[(i - 1) * itemsPerRow +1].name" >
-                                <GridLayout class="card-layout" rows="120, auto,auto,auto" columns="*, *, *">
-                                    <Label :text="Items[(i - 1) * itemsPerRow].foodBankId" class="" row="1" colSpan="3" />
-                                    <Label :text="Items[(i - 1) * itemsPerRow].groceryStoreId" class="" row="2" colSpan="3" />
-                                    <Label :text="Items[(i - 1) * itemsPerRow].quantity" class="" row="2" colSpan="3" />
-                                    <Button row="3" colSpan="3" text="Select" class="btn m-t-20 add-button" />
-                                </GridLayout>
-                            </CardView>
-                    </GridLayout>
-
+                        <CardView v-bind:key="item" v-for="item in items" class="card" elevation="40" radius="10" ios:shadowRadius="3">
+                            <StackLayout class="card-layout">
+                                <Label class="h2" :text="item.heading" />
+                                <Label class="body" textWrap="true" :text="item.content" />
+                                <button> Add</button>
+                                <button> Remove</button>
+                            </StackLayout>
+                        </CardView>
+                    />
                     </StackLayout>
                 </ScrollView>
             </TabViewItem>
@@ -57,33 +35,29 @@
                 </GridLayout>
             </TabViewItem>
 
-
-            <TabViewItem title="Directions">
-                <GridLayout columns="*" rows="*">
-                    <Label class="message" text="Google map" col="0" row="0"/>
-                </GridLayout>
-            </TabViewItem>
-
         </TabView>
     </Page>
 </template>
 
 <script >
-    import Vue from 'nativescript-vue';
-    import firebase from "nativescript-plugin-firebase";
+    import firebase from 'nativescript-plugin-firebase'
+    const isPlayground = true; // change this to show card view on android when building locally
 
     export default {
-        data() {
+       data() {
             return {
-                textFieldValue: "",
-                Items: [
-                ],
-                itemsPerRow:2
-            };
+                items: [
+                    { heading: "Bulbasaur", content: "Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger." },
+                    { heading: "Ivysaur", content: "To support its weight, Ivysaur’s legs and trunk grow thick and strong. If it starts spending more time lying in the sunlight, it’s a sign that the bud will bloom into a large flower soon." },
+                    { heading: "Venusaur", content: "There is a large flower on Venusaur’s back. The flower is said to take on vivid colors if it gets plenty of nutrition and sunlight. The flower’s aroma soothes the emotions of people." },
+                    { heading: "Charmander", content: "The flame that burns at the tip of its tail is an indication of its emotions. The flame wavers when Charmander is enjoying itself. If the Pokémon becomes enraged, the flame burns fiercely." },
+                ]
+            }
         },
         created() {
+            /**
             let that = this
-            firebase.firestore
+            return firebase.firestore
                 .collection("Orders")
                 .where("quantity", ">=", "6").where("quantity", "<=", "15")
                 .get()
@@ -92,21 +66,10 @@
                     snapshot.forEach(document => {
                         itemArr.push(document.data());
                     });
-                    console.log(document.data());
                     that.Items = itemArr
                 });
+                **/
         },
-        
-        computed: {
-            rowCount: function() {
-                return Math.ceil(this.Items.length / this.itemsPerRow);
-            },
-        },        
-        methods: {
-                onButtonTap() {
-                    this.textFieldValue = 'Button was pressed';
-                }
-        }
     };
 
 

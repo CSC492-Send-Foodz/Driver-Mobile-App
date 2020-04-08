@@ -19,24 +19,28 @@ Vue.filter('fonticon', fonticon);
 // Initialize firebase
 var firebase = require('nativescript-plugin-firebase')
 
-firebase.init({projectId: 'send-foodz-1a677'}).then(
+firebase.init({}).then(
   function(inst) {
     console.log("firebase initialized!");
-    firebase.firestore
-                .collection("Orders")
-                .where("quantity", ">=", "6").where("quantity", "<=", "15")
-                .get()
-                .then(snapshot => {
-                    snapshot.forEach(document => {
-                        console.log(document.data());
-                    });
-                });
   },
   function(err) {
    console.log("firebase init error: ", err) 
   }
 )
 
+/**
+const driverCollection = firebase.firestore().collection("Drivers");
+const query = driverCollection
+    .where("capacity", ">", "10")
+
+    query
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+      });
+    });
+**/
 Vue.registerElement(
   'CardView',
   () => require('@nstudio/nativescript-cardview').CardView
