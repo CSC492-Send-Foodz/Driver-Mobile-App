@@ -7,11 +7,11 @@ export default new Vuex.Store({
   state: {
     //hard coded but assume it was inputted
     driverCapacity: 10,
-    
+
     activeOrders: [],
   },
   mutations: {
-
+    
   },
   actions: {
 

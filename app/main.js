@@ -17,10 +17,10 @@ TNSFontIcon.loadCss();
 Vue.filter('fonticon', fonticon);
 
 // Initialize firebase
-var firebase = require('nativescript-plugin-firebase')
+const firebase = require('nativescript-plugin-firebase')
 
 firebase.init({}).then(
-  function(inst) {
+  function() {
     console.log("firebase initialized!");
   },
   function(err) {

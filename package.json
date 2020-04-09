@@ -2,7 +2,7 @@
   "name": "driver-mobile-app",
   "version": "1.0.0",
   "description": "A native application built with NativeScript-Vue",
-  "author": "Nada Elnour <nelnour90@gmail.com>",
+  "author": "",
   "license": "MIT",
   "nativescript": {
     "id": "com.sendfoodz.drivermobile",
@@ -17,6 +17,7 @@
   "dependencies": {
     "@nativescript/theme": "^2.3.3",
     "@nstudio/nativescript-cardview": "^1.0.0",
+    "axios": "^0.19.2",
     "nativescript-fonticon": "^2.0.0",
     "nativescript-plugin-firebase": "^10.5.0",
     "nativescript-vue": "^2.4.0",
