@@ -1,39 +1,53 @@
 <template>
 	<Page>
-		<FlexboxLayout class="page">
-			<StackLayout class="form">
-				<Image class="logo" src="~/images/logo.png" />
-				<Label class="header" text="Senz Foodz" />
+        <ScrollView>
+            <FlexboxLayout class="page">
+                <StackLayout class="form">
+                    <Image class="logo" src="~/images/logo.png" />
+                    <Label class="header" text="Senz Foodz" />
 
-				<StackLayout class="input-field" marginBottom="25">
-					<TextField class="input" hint="Email" keyboardType="email" autocorrect="false" autocapitalizationType="none" v-model="user.email"
-					 returnKeyType="next" @returnPress="focusPassword" fontSize="18" />
-					<StackLayout class="hr-light" />
-				</StackLayout>
+                    <StackLayout class="input-field" marginBottom="15">
+                        <TextField class="input" hint="Name" keyboardType="name" autocorrect="false" autocapitalizationType="none" v-model="user.name"
+                        returnKeyType="next" @returnPress="focusPassword" fontSize="18" />
+                        <StackLayout class="hr-light" />
+                    </StackLayout>
 
-				<StackLayout class="input-field" marginBottom="25">
-					<TextField ref="password" class="input" hint="Password" secure="true" v-model="user.password" :returnKeyType="isLoggingIn ? 'done' : 'next'"
-					 @returnPress="focusConfirmPassword" fontSize="18" />
-					<StackLayout class="hr-light" />
-				</StackLayout>
+                    <StackLayout class="input-field" marginBottom="15">
+                        <TextField class="input" hint="Email" keyboardType="email" autocorrect="false" autocapitalizationType="none" v-model="user.email"
+                        returnKeyType="next" @returnPress="focusPassword" fontSize="18" />
+                        <StackLayout class="hr-light" />
+                    </StackLayout>
 
-				<StackLayout v-show="!isLoggingIn" class="input-field">
-					<TextField ref="confirmPassword" class="input" hint="Confirm password" secure="true" v-model="user.confirmPassword" returnKeyType="done"
-					 fontSize="18" />
-					<StackLayout class="hr-light" />
-				</StackLayout>
+                    <StackLayout class="input-field" marginBottom="15">
+                        <TextField ref="password" class="input" hint="Password" secure="true" v-model="user.password" :returnKeyType="isLoggingIn ? 'done' : 'next'"
+                        @returnPress="focusConfirmPassword" fontSize="18" />
+                        <StackLayout class="hr-light" />
+                    </StackLayout>
 
-				<Button :text="isLoggingIn ? 'Log In' : 'Sign Up'" @tap="submit" class="btn btn-primary m-t-20" />
-				<Label v-show="isLoggingIn" text="Forgot your password?" class="login-label" @tap="forgotPassword" />
-			</StackLayout>
+                    <StackLayout v-show="!isLoggingIn" marginBottom="15" class="input-field">
+                        <TextField ref="confirmPassword" class="input" hint="Confirm password" secure="true" v-model="user.confirmPassword" returnKeyType="done"
+                        fontSize="18" />
+                        <StackLayout class="hr-light" />
+                    </StackLayout>
 
-			<Label class="login-label sign-up-label" @tap="toggleForm">
-	          <FormattedString>
-	            <Span :text="isLoggingIn ? 'Don’t have an account? ' : 'Back to Login'" />
-	            <Span :text="isLoggingIn ? 'Sign up' : ''" class="bold" />
-	          </FormattedString>
-	        </Label>
-		</FlexboxLayout>
+                    <StackLayout class="input-field">
+                        <TextField class="input" hint="Capacity" keyboardType="capacity" autocorrect="false" autocapitalizationType="none" v-model="user.capacity"
+                        returnKeyType="next" @returnPress="focusPassword" fontSize="18" />
+                        <StackLayout class="hr-light" />
+                    </StackLayout>
+
+                    <Button :text="isLoggingIn ? 'Log In' : 'Sign Up'" @tap="submit" class="btn btn-primary m-t-20" />
+                    <Label v-show="isLoggingIn" text="Forgot your password?" class="login-label" @tap="forgotPassword" />
+                </StackLayout>
+
+                <Label class="login-label sign-up-label" @tap="toggleForm">
+                <FormattedString>
+                    <Span :text="isLoggingIn ? 'Don’t have an account? ' : 'Back to Login'" />
+                    <Span :text="isLoggingIn ? 'Sign up' : ''" class="bold" />
+                </FormattedString>
+                </Label>
+            </FlexboxLayout>
+        </ScrollView>
 	</Page>
 </template>
 
@@ -57,9 +71,11 @@ export default {
         return {
             isLoggingIn: true,
             user: {
-                email: "foo@foo.com",
-                password: "foo",
-                confirmPassword: "foo"
+                email: "",
+                password: "",
+                confirmPassword: "",
+                name: "",
+                capacity: ""
             }
         };
     },
@@ -116,7 +132,7 @@ export default {
             prompt({
                 title: "Forgot Password",
                 message:
-                    "Enter the email address you used to register for APP NAME to reset your password.",
+                    "Enter the email address you used to register for Senz Foodz to reset your password.",
                 inputType: "email",
                 defaultText: "",
                 okButtonText: "Ok",
