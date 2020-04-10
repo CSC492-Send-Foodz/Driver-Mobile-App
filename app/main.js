@@ -8,13 +8,13 @@ import store from "./store/index.js"
 Vue.config.silent = (TNS_ENV === 'production')
 
 // Bind fonticons
-TNSFontIcon.debug = true;
-TNSFontIcon.paths = {
-  'fa': './assets/all.css'
-};
-TNSFontIcon.loadCss();
+// TNSFontIcon.debug = true;
+// TNSFontIcon.paths = {
+//   'fa': './assets/all.css'
+// };
+// TNSFontIcon.loadCss();
 
-Vue.filter('fonticon', fonticon);
+// Vue.filter('fonticon', fonticon);
 
 Vue.registerElement(
   'CardView',

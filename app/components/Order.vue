@@ -1,8 +1,13 @@
 <template>
   <CardView class="card" elevation="40" radius="10" ios:shadowRadius="0">
     <StackLayout>
-      <Label class="h2" :text="item.heading" />
-      <Label class="body" textWrap="true" :text="item.content" />
+      <Label class="h4" textWrap="true">
+        Grocery Store: {{ item.groceryStoreId }}
+      </Label>
+      <Label class="h4" textWrap="true">
+        Food Bank: {{ item.foodBankId }}
+      </Label>
+      <Label class="h4" textWrap="true"> Qty: {{ item.quantity }}</Label>
       <Button @tap="addToDeliverables">Add</Button>
       <Button @tap="removeFromOrders">Remove</Button>
     </StackLayout>
@@ -11,7 +16,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import store from '../store/index';
+import store from "../store/index";
 
 export default {
   props: {

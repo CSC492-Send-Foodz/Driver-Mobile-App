@@ -20,44 +20,50 @@
 import firebase from "nativescript-plugin-firebase";
 import { mapGetters } from "vuex";
 import Order from "./Order";
-import store from '../store/index';
+import store from "../store/index";
 const isPlayground = true; // change this to show card view on android when building locally
 
 export default {
   created() {
     store.dispatch("login");
+    store.commit("bindActiveOrders");
+  },
+  mounted() {
+    this.items = this.getActiveOrders();
+    console.log(this.items)
   },
   components: {
-    Order,
+    Order
   },
   data() {
     return {
-      items: [
-        {
-          heading: "Bulbasaur",
-          content: "Bulbasaur can be seen napping in bright sunlight. ",
-        },
-        {
-          heading: "Ivysaur",
-          content:
-            "To support its weight, Ivysaur’s legs and trunk grow thick and strong. ",
-        },
-        {
-          heading: "Venusaur",
-          content: "There is a large flower on Venusaur’s back. ",
-        },
-        {
-          heading: "Charmander",
-          content:
-            "The flame that burns at the tip of its tail is an indication of its emotions. ",
-        },
-      ],
+      items: []
+      // items: [
+      //   {
+      //     heading: "Bulbasaur",
+      //     content: "Bulbasaur can be seen napping in bright sunlight. ",
+      //   },
+      //   {
+      //     heading: "Ivysaur",
+      //     content:
+      //       "To support its weight, Ivysaur’s legs and trunk grow thick and strong. ",
+      //   },
+      //   {
+      //     heading: "Venusaur",
+      //     content: "There is a large flower on Venusaur’s back. ",
+      //   },
+      //   {
+      //     heading: "Charmander",
+      //     content:
+      //       "The flame that burns at the tip of its tail is an indication of its emotions. ",
+      //   },
+      // ],
     };
   },
-  computed: {
-    ...mapGetters(["getActiveOrders"])
-  },
   methods: {
+    getActiveOrders() {
+      return store.getters.getActiveOrders;
+    },
     selectItem() {
       console.log("selected");
       this.$emit("deletedItem", "deleted");
@@ -65,7 +71,7 @@ export default {
     removeItem(idx) {
       console.log("parent deleting " + idx);
       this.items.splice(idx, 1);
-    },
-  },
+    }
+  }
 };
 </script>

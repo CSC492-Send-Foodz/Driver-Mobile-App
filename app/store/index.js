@@ -11,7 +11,6 @@ firebase
     authDomain: "send-foodz-1a677.firebaseio.com",
     databaseURL: "https://send-foodz-1a677.firebaseio.com",
     projectId: "send-foodz-1a677",
-    storageBucket: "send-foodz-1a677.appspot.com",
     messagingSenderId: "813090925215"
   })
   .then(
@@ -25,6 +24,7 @@ firebase
   );
 
 const BASE_URL = "https://us-central1-send-foodz-1a677.cloudfunctions.net/app";
+const db = firebase.firestore;
 
 Vue.use(Vuex);
 // not using vuex store for now
@@ -43,21 +43,24 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-
+    bindActiveOrders({ commit }) {
+      db.collection("Orders").where("status", "==", "Looking For Driver").get().then(orders => {
+        orders.forEach(order => {
+          console.log(order.data())
+          this.state.activeOrders.push(order.data());
+        })
+      }
+      )
+    },
   },
   actions: {
-    bindActiveOrders: firestoreAction(({ bindFirestoreRef }) => {
-      bindFirestoreRef('activeOrders', firebase.firestore().collection("Orders")
-        .where('status', '==', 'Looking for Driver'))
-    }),
-
     login({ commit }) {
       firebase
         .login({
           type: firebase.LoginType.PASSWORD,
           passwordOptions: {
-            email: this.state.email,
-            password: this.state.password
+            email: "nelnour90@gmail.com",
+            password: "pipchin32!"
           }
         })
         .catch(error => console.log(error));
@@ -65,6 +68,7 @@ export default new Vuex.Store({
       firebase.getAuthToken({ forceRefresh: false }).then(token => {
         this.state.authToken = token.token;
       });
+      console.log(this.state.authToken)
     },
 
     confirmDelivery({ commit }) {
