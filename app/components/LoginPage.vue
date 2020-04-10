@@ -6,7 +6,7 @@
                     <Image class="logo" src="~/images/logo.png" />
                     <Label class="header" text="Senz Foodz" />
 
-                    <StackLayout class="input-field" marginBottom="15">
+                    <StackLayout v-show="!isLoggingIn" class="input-field" marginBottom="15">
                         <TextField class="input" hint="Name" keyboardType="name" autocorrect="false" autocapitalizationType="none" v-model="user.name"
                         returnKeyType="next" @returnPress="focusPassword" fontSize="18" />
                         <StackLayout class="hr-light" />
@@ -30,7 +30,7 @@
                         <StackLayout class="hr-light" />
                     </StackLayout>
 
-                    <StackLayout class="input-field">
+                    <StackLayout v-show="!isLoggingIn" class="input-field">
                         <TextField class="input" hint="Capacity" keyboardType="capacity" autocorrect="false" autocapitalizationType="none" v-model="user.capacity"
                         returnKeyType="next" @returnPress="focusPassword" fontSize="18" />
                         <StackLayout class="hr-light" />
