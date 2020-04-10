@@ -18,10 +18,15 @@
 
 <script>
 import firebase from "nativescript-plugin-firebase";
+import { mapGetters } from "vuex";
 import Order from "./Order";
+import store from '../store/index';
 const isPlayground = true; // change this to show card view on android when building locally
 
 export default {
+  created() {
+    store.dispatch("login");
+  },
   components: {
     Order,
   },
@@ -49,7 +54,9 @@ export default {
       ],
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["getActiveOrders"])
+  },
   methods: {
     selectItem() {
       console.log("selected");

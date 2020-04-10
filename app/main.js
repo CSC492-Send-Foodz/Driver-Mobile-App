@@ -16,19 +16,6 @@ TNSFontIcon.loadCss();
 
 Vue.filter('fonticon', fonticon);
 
-/**
-const driverCollection = firebase.firestore().collection("Drivers");
-const query = driverCollection
-    .where("capacity", ">", "10")
-
-    query
-    .get()
-    .then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-      });
-    });
-**/
 Vue.registerElement(
   'CardView',
   () => require('@nstudio/nativescript-cardview').CardView
