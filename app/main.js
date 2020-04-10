@@ -3,7 +3,7 @@ import App from './components/App'
 import { TNSFontIcon, fonticon } from 'nativescript-fonticon'
 
 import store from "./store/index.js"
-  
+
 // Prints Vue logs when --env.production is *NOT* set while building
 Vue.config.silent = (TNS_ENV === 'production')
 
@@ -15,18 +15,6 @@ TNSFontIcon.paths = {
 TNSFontIcon.loadCss();
 
 Vue.filter('fonticon', fonticon);
-
-// Initialize firebase
-const firebase = require('nativescript-plugin-firebase')
-
-firebase.init({}).then(
-  function() {
-    console.log("firebase initialized!");
-  },
-  function(err) {
-   console.log("firebase init error: ", err) 
-  }
-)
 
 /**
 const driverCollection = firebase.firestore().collection("Drivers");
