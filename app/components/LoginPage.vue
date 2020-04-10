@@ -51,15 +51,6 @@ const userService = {
     }
 };
 
-// A stub for the main page of your app. In a real app you’d put this page in its own .vue file.
-const HomePage = {
-    template: `
-<Page>
-	<Label class="m-20" textWrap="true" text="You have successfully authenticated. This is where you build your core application functionality."></Label>
-</Page>
-`
-};
-
 import App from "./App.vue"
 
 export default {
