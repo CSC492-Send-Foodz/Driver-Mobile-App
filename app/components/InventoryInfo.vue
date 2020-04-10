@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import store from "../store/index"
 import firebase from "nativescript-plugin-firebase";
 import Order from "./Order";
 const isPlayground = true; // change this to show card view on android when building locally
