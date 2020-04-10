@@ -189,7 +189,7 @@ export default {
 	}
 
 	.logo {
-		margin-bottom: 12;
+		margin-bottom: 2;
 		height: 90;
 		font-weight: bold;
 	}
@@ -200,7 +200,7 @@ export default {
 		font-weight: 600;
 		margin-bottom: 70;
 		text-align: center;
-		color: rgb(175, 0, 0);
+		color: rgb(16, 150, 34);
 	}
 
 	.input-field {
@@ -219,7 +219,7 @@ export default {
 	.btn-primary {
 		height: 50;
 		margin: 30 5 15 5;
-		background-color: #D51A1A;
+		background-color: rgb(129, 202, 111);
 		border-radius: 5;
 		font-size: 20;
 		font-weight: 600;
