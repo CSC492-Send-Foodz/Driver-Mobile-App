@@ -15,9 +15,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import store from "../store/index";
-
 export default {
   props: {
     index: Number,
@@ -26,10 +23,9 @@ export default {
   },
   data() {},
   methods: {
-    ...mapActions(["confirmDelivery"]),
     addToDeliverables() {
       this.state = "accepted";
-      store.dispatch("confirmDelivery");
+      this.$store.dispatch("confirmDelivery");
       this.$emit("confirmOrder", this.index);
     },
     removeFromOrders() {
@@ -39,4 +35,3 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>

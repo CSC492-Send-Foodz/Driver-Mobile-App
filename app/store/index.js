@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from "axios";
-import { firestoreAction } from 'vuexfire'
 
 const firebase = require("nativescript-plugin-firebase");
 
@@ -27,14 +26,14 @@ const BASE_URL = "https://us-central1-send-foodz-1a677.cloudfunctions.net/app";
 const db = firebase.firestore;
 
 Vue.use(Vuex);
-// not using vuex store for now
+
 export default new Vuex.Store({
   state: {
     email: "nelnour90@gmail.com",
     password: "pipchin32!",
     id: "4420",
     authToken: "",
-    driverCapacity: 10,
+    driverCapacity: "10",
     activeOrders: [],
   },
   getters: {
@@ -46,8 +45,10 @@ export default new Vuex.Store({
     bindActiveOrders({ commit }) {
       db.collection("Orders").where("status", "==", "Looking For Driver").get().then(orders => {
         orders.forEach(order => {
-          console.log(order.data())
-          this.state.activeOrders.push(order.data());
+          let orderData = order.data();
+          if (orderData.quantity <= this.state.driverCapacity) {
+            this.state.activeOrders.push(order.data());
+          }
         })
       }
       )
@@ -68,7 +69,6 @@ export default new Vuex.Store({
       firebase.getAuthToken({ forceRefresh: false }).then(token => {
         this.state.authToken = token.token;
       });
-      console.log(this.state.authToken)
     },
 
     confirmDelivery({ commit }) {
@@ -83,9 +83,6 @@ export default new Vuex.Store({
 
       axios
         .post(BASE_URL + "/driver/statusUpdate", payload, config)
-        .then(result => {
-          console.log(JSON.stringify(result));
-        })
         .catch(error => {
           console.log("error")
           console.log(error.response);

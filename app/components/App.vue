@@ -8,9 +8,6 @@
         <TabStripItem>
           <Label text="Active Orders"></Label>
         </TabStripItem>
-        <TabStripItem>
-          <Label text="Map"></Label>
-        </TabStripItem>
       </TabStrip>
 
       <TabContentItem>
@@ -22,12 +19,6 @@
       <TabContentItem>
         <InventoryInfo @deletedItem="logDeletion" />
       </TabContentItem>
-
-      <TabContentItem>
-        <StackLayout>
-          <Label text="map" class="h1"></Label>
-        </StackLayout>
-      </TabContentItem>
     </BottomNavigation>
   </Page>
 </template>
@@ -38,7 +29,7 @@ import InventoryInfo from "./InventoryInfo";
 
 export default {
   components: {
-    InventoryInfo,
+    InventoryInfo
   },
   data() {
     return {};
@@ -47,8 +38,8 @@ export default {
     logDeletion(mssg) {
       console.log(mssg);
       console.log("test logging");
-    },
-  },
+    }
+  }
 };
 </script>
 
