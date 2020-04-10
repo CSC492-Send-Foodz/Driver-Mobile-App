@@ -1,11 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from "axios";
+import axios from 'axios';
 
 const firebase = require("nativescript-plugin-firebase");
 
 firebase
   .init({
+    showNotifications: true,
+    showNotificationsWhenInForeground: true,
+    onPushTokenReceivedCallback: (token) => {
+      console.log('Push Token :', { token });
+    },
+    onMessageReceivedCallback: (message) => {
+      console.log('Message received :', { message });
+    },
     apiKey: "AIzaSyCMvoPbVC1na4E8L8rtPQrmK-gVuldeTSo",
     authDomain: "send-foodz-1a677.firebaseio.com",
     databaseURL: "https://send-foodz-1a677.firebaseio.com",

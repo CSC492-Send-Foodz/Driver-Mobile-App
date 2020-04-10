@@ -1,6 +1,6 @@
 import Vue from 'nativescript-vue'
 import App from './components/App'
-import { TNSFontIcon, fonticon } from 'nativescript-fonticon'
+import { TNSFontIcon, fonticon } from 'nativescript-fonticon';
 
 import store from "./store/index.js"
 
