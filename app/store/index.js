@@ -59,6 +59,7 @@ export default new Vuex.Store({
 
   mutations: {
     bindActiveOrders({ commit }) {
+      this.state.activeOrders = [];
       db.collection("Orders").where("status", "==", "Looking For Driver").get().then(orders => {
         orders.forEach(order => {
           let orderData = order.data();
