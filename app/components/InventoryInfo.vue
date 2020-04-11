@@ -17,17 +17,16 @@
 
 <script>
 import store from "../store/index"
-import firebase from "nativescript-plugin-firebase";
 import Order from "./Order";
-import store from '../store/index.js';
-const isPlayground = true; // change this to show card view on android when building locally
 
 export default {
   created() {
     store.commit("bindActiveOrders");
+    console.log("created")
   },
   mounted() {
     this.items = this.getActiveOrders();
+    console.log("getting orders")
   },
   components: {
     Order
@@ -39,6 +38,7 @@ export default {
   },
   methods: {
     getActiveOrders() {
+      console.log("getting ordes")
       return store.getters.getActiveOrders;
     },
     removeItem(idx) {

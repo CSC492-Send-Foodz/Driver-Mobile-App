@@ -70,10 +70,12 @@ export default new Vuex.Store({
   },
   mutations: {
     bindActiveOrders({ commit }) {
+
       this.state.activeOrders = [];
       db.collection("Orders").where("status", "==", "Looking For Driver").get().then(orders => {
         orders.forEach(order => {
           let orderData = order.data();
+          console.log(orderData);
           if (orderData.quantity <= this.state.driverCapacity) {
             this.state.activeOrders.push(order.data());
           }
@@ -96,6 +98,7 @@ export default new Vuex.Store({
 
       firebase.getAuthToken({ forceRefresh: false }).then(token => {
         this.state.authToken = token.token;
+        console.log(this.state.authToken)
       });
     },
 
@@ -121,18 +124,19 @@ export default new Vuex.Store({
       const config = {
         headers: { Authorization: `Bearer ${this.state.authToken}` }
       };
-			const data = {
+      const data = {
         name: payload[0],
         capacity: payload[1],
         id: this.state.id
       };
-      
+
       console.log(data)
 
       axios.post(BASE_URL + "/driver/updateUserAccount", data, config)
-      .catch(error => {
-        console.log("error!error!error!")
-        console.log(error.response)});
-      }
+        .catch(error => {
+          console.log("error!error!error!")
+          console.log(error.response)
+        });
     }
+  }
 });
