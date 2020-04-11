@@ -7,7 +7,7 @@
                     <Label class="header" text="Senz Foodz" />
 
                     <StackLayout v-show="!isLoggingIn" class="input-field" marginBottom="15">
-                        <TextField class="input" hint="Name" keyboardType="name" autocorrect="false" autocapitalizationType="none" v-model="user.name"
+                        <TextField class="input" hint="Name" keyboardType="name" autocorrect="false" autocapitalizationType="none" v-model="additional.name"
                         returnKeyType="next" @returnPress="focusPassword" fontSize="18" />
                         <StackLayout class="hr-light" />
                     </StackLayout>
@@ -31,7 +31,7 @@
                     </StackLayout>
 
                     <StackLayout v-show="!isLoggingIn" class="input-field">
-                        <TextField class="input" hint="Capacity" keyboardType="capacity" autocorrect="false" autocapitalizationType="none" v-model="user.capacity"
+                        <TextField class="input" hint="Capacity" keyboardType="capacity" autocorrect="false" autocapitalizationType="none" v-model="additional.capacity"
                         returnKeyType="next" @returnPress="focusPassword" fontSize="18" />
                         <StackLayout class="hr-light" />
                     </StackLayout>
@@ -52,6 +52,9 @@
 </template>
 
 <script>
+import App from "./App.vue"
+import { mapMutations, mapActions } from "vuex";
+
 const userService = {
     register(user) {
         return Promise.resolve(user);
@@ -64,8 +67,6 @@ const userService = {
     }
 };
 
-import App from "./App.vue"
-
 export default {
     data() {
         return {
@@ -74,12 +75,16 @@ export default {
                 email: "",
                 password: "",
                 confirmPassword: "",
+            },
+            additional: {
                 name: "",
-                capacity: ""
+                capacity: "",
             }
         };
     },
     methods: {
+        ...mapActions(["postAccountUpdate"]),
+
         toggleForm() {
             this.isLoggingIn = !this.isLoggingIn;
         },
@@ -95,6 +100,7 @@ export default {
                 this.login();
             } else {
                 this.register();
+                this.post();
             }
         },
 
@@ -126,6 +132,20 @@ export default {
                         "Unfortunately we were unable to create your account."
                     );
                 });
+
+
+        },
+        post(){
+            this.postAccountUpdate([
+                this.additional.name,
+                this.additional.capacity
+            ])
+            .then(response => {
+              console.log("Response", response.data);
+            })
+            .catch(error => {
+              console.log("Error", error);        
+            });
         },
 
         forgotPassword() {
