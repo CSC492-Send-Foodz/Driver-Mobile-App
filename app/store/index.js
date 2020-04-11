@@ -42,7 +42,6 @@ firebase
   .then(
     function () {
       console.log("firebase initialized!");
-      console.log("connected!");
     },
     function (err) {
       console.log("firebase init error: ", err);
@@ -58,16 +57,22 @@ export default new Vuex.Store({
   state: {
     email: "nelnour90@gmail.com",
     password: "pipchin32!",
-    id: "4420",
+    id: "1111",
     authToken: "",
     driverCapacity: "10",
     activeOrders: [],
   },
+
   getters: {
     getActiveOrders: (state) => {
       return state.activeOrders;
+    },
+
+    getAuthToken: (state) => {
+      return state.authToken;
     }
   },
+
   mutations: {
     bindActiveOrders({ commit }) {
       this.state.activeOrders = [];
@@ -82,6 +87,7 @@ export default new Vuex.Store({
       )
     },
   },
+
   actions: {
     login({ commit }) {
       firebase
@@ -94,8 +100,12 @@ export default new Vuex.Store({
         })
         .catch(error => console.log(error));
 
+      //console.log("log in successful authorization token set");
+
       firebase.getAuthToken({ forceRefresh: false }).then(token => {
         this.state.authToken = token.token;
+
+      //console.log("this is the new authToken", this.state.authToken);
       });
     },
 
@@ -115,6 +125,43 @@ export default new Vuex.Store({
         .catch(error => {
           console.log(error.response);
         });
+    },
+
+    postAccountUpdate(context, payload) {
+      const config = {
+        headers: { Authorization: `Bearer ${this.state.authToken}` }
+      };
+			const data = {
+        name: payload[0],
+        capacity: payload[1],
+        id: this.state.id
+      };
+      axios.post(BASE_URL + "/driver/updateUserAccount", data, config)
+      .catch(error => {
+        console.log(error.response)});
+      
+      console.log("postAccountUpdate WORKED!!");
+      },
+    
+      signin(context, payload) {
+        firebase.auth().setPersistence(firebase.default.auth.Auth.Persistence.SESSION).then(async function () {
+          return firebase.auth().signInWithEmailAndPassword(payload[0], payload[1])
+            .catch(error => {
+              if (error.code === "auth/wrong-password") {
+                return "Login Failed";
+              } else {
+                return "Something went wrong. Try again later";
+              }
+            });
+        });
+      },
+ /**     
+      signup(email, password) {
+        return db.auth().createUserWithEmailAndPassword(email, password)
+          .catch(error => {
+            return error.message;
+          });
+      }
+**/
     }
-  }
 });
