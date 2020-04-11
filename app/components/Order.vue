@@ -24,7 +24,11 @@ export default {
     item: Object,
     state: String
   },
-  data() {},
+
+  data() {
+
+  },
+
   methods: {
     addToDeliverables() {
       this.state = "accepted";
