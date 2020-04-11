@@ -17,7 +17,7 @@
         <item name="android:timePickerMode">spinner</item>
     </style>
 
-    <style name="NativeScriptToolbarStyle" parent="NativeScriptToolbarStyleBase">
+    <style name="NativeScriptToolbarStyle" parent="NativeScriptToolbarStyleBase" actionBarHidden="true">
         <item name="android:elevation">4dp</item>
     </style>
 </resources>
