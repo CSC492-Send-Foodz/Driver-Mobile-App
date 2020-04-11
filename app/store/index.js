@@ -55,18 +55,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    email: "",
-    password: "",
-    id: "1111",
+    email: "nelnour90@gmail.com",
+    password: "pipchin32!",
+    id: "4420",
     authToken: "",
-    driverCapacity: "",
+    driverCapacity: "10",
     name: "",
     activeOrders: [],
   },
-
-//  email: "nelnour90@gmail.com",
-//  password: "pipchin32!",
-
   getters: {
     getActiveOrders: (state) => {
       return state.activeOrders;
@@ -79,13 +75,12 @@ export default new Vuex.Store({
 
   mutations: {
     bindActiveOrders({ commit }) {
-
       this.state.activeOrders = [];
       db.collection("Orders").where("status", "==", "Looking For Driver").get().then(orders => {
         orders.forEach(order => {
           let orderData = order.data();
-          console.log(orderData);
           if (orderData.quantity <= this.state.driverCapacity) {
+            console.log(orderData)
             this.state.activeOrders.push(order.data());
           }
         })
@@ -107,16 +102,14 @@ export default new Vuex.Store({
         })
         .catch(error => console.log(error));
 
+        firebase.getAuthToken({ forceRefresh: false }).then(token => {
+          this.state.authToken = token.token;
+  
+          console.log(authToken)
+        });
+
       //console.log("log in successful authorization token set");
     },
-    createToken({commit}){
-      firebase.getAuthToken({ forceRefresh: false }).then(token => {
-        this.state.authToken = token.token;
-
-      //console.log("this is the new authToken", this.state.authToken);
-      });
-    },
-
     confirmDelivery({ commit }) {
       const config = {
         headers: { Authorization: `Bearer ${this.state.authToken}` }
@@ -135,15 +128,15 @@ export default new Vuex.Store({
         });
     },
 
-    postAccountUpdate({commit}) {
+    postAccountUpdate({ commit }) {
       const config = {
         headers: { Authorization: `Bearer ${this.state.authToken}` }
       };
       //data passed correctly
       //console.log(this.state.name, this.state.capacity, this.state.id);
-      //console.log(config);
+      console.log(config);
 
-			const data = {
+      const data = {
         name: this.state.name,
         capacity: this.state.capacity,
         id: this.state.id,
@@ -151,33 +144,35 @@ export default new Vuex.Store({
       };
 
       axios.post(BASE_URL + "/driver/updateUserAccount", data, config)
-      .then(response => {
-        console.log(response.data)})
-      .catch(error => {
-        console.log(error.response)});
-      
-      //console.log("postAccountUpdate WORKED!!");
-      },
-/**     
-      signin(context, payload) {
-        firebase.auth().setPersistence(firebase.default.auth.Auth.Persistence.SESSION).then(async function () {
-          return firebase.auth().signInWithEmailAndPassword(payload[0], payload[1])
-            .catch(error => {
-              if (error.code === "auth/wrong-password") {
-                return "Login Failed";
-              } else {
-                return "Something went wrong. Try again later";
-              }
-            });
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error.response)
         });
-      },
- /**     
-      signup(email, password) {
-        return db.auth().createUserWithEmailAndPassword(email, password)
-          .catch(error => {
-            return error.message;
-          });
-      }
-**/
-    }
+
+      //console.log("postAccountUpdate WORKED!!");
+    },
+    /**     
+          signin(context, payload) {
+            firebase.auth().setPersistence(firebase.default.auth.Auth.Persistence.SESSION).then(async function () {
+              return firebase.auth().signInWithEmailAndPassword(payload[0], payload[1])
+                .catch(error => {
+                  if (error.code === "auth/wrong-password") {
+                    return "Login Failed";
+                  } else {
+                    return "Something went wrong. Try again later";
+                  }
+                });
+            });
+          },
+     /**     
+          signup(email, password) {
+            return db.auth().createUserWithEmailAndPassword(email, password)
+              .catch(error => {
+                return error.message;
+              });
+          }
+    **/
+  }
 });
