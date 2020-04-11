@@ -86,6 +86,7 @@ export default {
     },
     mounted(){
         //store.dispatch("login");
+        store.dispatch("createToken");
     },
     methods: {
         //...mapActions(["postAccountUpdate", "login"]),
@@ -150,10 +151,11 @@ export default {
                 });
         },
         post(){
-            store.dispatch("postAccountUpdate", ([
-                this.additional.name,
-                this.additional.capacity
-            ]));
+            store.state.name = this.additional.name;
+            store.state.capacity = this.additional.capacity;
+
+            store.dispatch("postAccountUpdate");
+
             /**
             this.postAccountUpdate([
                 this.additional.name,

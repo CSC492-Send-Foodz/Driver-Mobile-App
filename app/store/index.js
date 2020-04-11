@@ -59,9 +59,10 @@ export default new Vuex.Store({
   state: {
     email: "",
     password: "",
-    id: "4420",
+    id: "1111",
     authToken: "",
-    driverCapacity: "10",
+    driverCapacity: "",
+    name: "",
     activeOrders: [],
   },
 
@@ -107,7 +108,8 @@ export default new Vuex.Store({
         .catch(error => console.log(error));
 
       //console.log("log in successful authorization token set");
-
+    },
+    createToken({commit}){
       firebase.getAuthToken({ forceRefresh: false }).then(token => {
         this.state.authToken = token.token;
 
@@ -133,20 +135,25 @@ export default new Vuex.Store({
         });
     },
 
-    postAccountUpdate(context, payload) {
+    postAccountUpdate({commit}) {
       const config = {
         headers: { Authorization: `Bearer ${this.state.authToken}` }
       };
+      //data passed correctly
+      //console.log(this.state.name, this.state.capacity, this.state.id);
+      //console.log(config);
+
 			const data = {
-        name: payload[0],
-        capacity: payload[1],
+        name: this.state.name,
+        capacity: this.state.capacity,
         id: this.state.id
       };
+
       axios.post(BASE_URL + "/driver/updateUserAccount", data, config)
       .catch(error => {
         console.log(error.response)});
       
-      console.log("postAccountUpdate WORKED!!");
+      //console.log("postAccountUpdate WORKED!!");
       },
 /**     
       signin(context, payload) {
