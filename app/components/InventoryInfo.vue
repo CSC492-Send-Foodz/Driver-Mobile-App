@@ -23,7 +23,8 @@ const isPlayground = true; // change this to show card view on android when buil
 
 export default {
   created() {
-    store.dispatch("createToken");
+    //store.dispatch("createToken");
+    //console.log("this is the token", store.state.authToken)
     store.commit("bindActiveOrders");
   },
 

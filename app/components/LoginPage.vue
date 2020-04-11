@@ -85,7 +85,7 @@ export default {
         };
     },
     mounted(){
-        store.dispatch("login");
+        //store.dispatch("login");
     },
     methods: {
         //...mapActions(["postAccountUpdate", "login"]),

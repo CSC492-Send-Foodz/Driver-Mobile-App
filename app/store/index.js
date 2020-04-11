@@ -103,9 +103,7 @@ export default new Vuex.Store({
         .catch(error => console.log(error));
 
       //console.log("log in successful authorization token set");
-      },
 
-      createToken({commit}){
       firebase.getAuthToken({ forceRefresh: false }).then(token => {
         this.state.authToken = token.token;
 
@@ -159,7 +157,7 @@ export default new Vuex.Store({
             });
         });
       },
-     
+ /**     
       signup(email, password) {
         return db.auth().createUserWithEmailAndPassword(email, password)
           .catch(error => {
