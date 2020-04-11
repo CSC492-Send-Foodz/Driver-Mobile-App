@@ -57,13 +57,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    email: "nelnour90@gmail.com",
-    password: "pipchin32!",
-    id: "1111",
+    email: "",
+    password: "",
+    id: "4420",
     authToken: "",
     driverCapacity: "10",
     activeOrders: [],
   },
+
+//  email: "nelnour90@gmail.com",
+//  password: "pipchin32!",
 
   getters: {
     getActiveOrders: (state) => {
@@ -91,13 +94,14 @@ export default new Vuex.Store({
   },
 
   actions: {
-    login({ commit, payload }) {
+    login({ commit }) {
+      //console.log("this is inside login", payload);
       firebase
         .login({
           type: firebase.LoginType.PASSWORD,
           passwordOptions: {
-            email: payload[0],
-            password: payload[1]
+            email: this.state.email,
+            password: this.state.password
           }
         })
         .catch(error => console.log(error));

@@ -111,8 +111,9 @@ export default {
         },
 
         login() {
-            
-            store.dispatch("login", [this.user.email, this.user.password])
+            store.state.email = this.user.email;
+            store.state.password = this.user.password;
+            store.dispatch("login")
             .then(() => {
                 this.$navigateTo(App);
             })
