@@ -146,10 +146,13 @@ export default new Vuex.Store({
 			const data = {
         name: this.state.name,
         capacity: this.state.capacity,
-        id: this.state.id
+        id: this.state.id,
+        currentLocation: ''
       };
 
       axios.post(BASE_URL + "/driver/updateUserAccount", data, config)
+      .then(response => {
+        console.log(response.data)})
       .catch(error => {
         console.log(error.response)});
       
