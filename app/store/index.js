@@ -1,11 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from "axios";
+import axios from 'axios';
 
 const firebase = require("nativescript-plugin-firebase");
+var curToken;
 
 firebase
   .init({
+    showNotifications: true,
+    showNotificationsWhenInForeground: true,
+    onPushTokenReceivedCallback: (token) => {
+      console.log('Push Token :', { token });
+      curToken = token;
+    },
+    onMessageReceivedCallback: (message) => {
+      console.log('Message received :', { message });
+    },
     apiKey: "AIzaSyCMvoPbVC1na4E8L8rtPQrmK-gVuldeTSo",
     authDomain: "send-foodz-1a677.firebaseio.com",
     databaseURL: "https://send-foodz-1a677.firebaseio.com",
@@ -43,6 +53,7 @@ export default new Vuex.Store({
   },
   mutations: {
     bindActiveOrders({ commit }) {
+      this.state.activeOrders = [];
       db.collection("Orders").where("status", "==", "Looking For Driver").get().then(orders => {
         orders.forEach(order => {
           let orderData = order.data();
@@ -78,13 +89,13 @@ export default new Vuex.Store({
 
       const payload = {
         id: this.state.id,
-        newStatus: "Inventory picked up"
+        status: "Unavailable",
+        token: curToken
       };
 
       axios
         .post(BASE_URL + "/driver/statusUpdate", payload, config)
         .catch(error => {
-          console.log("error")
           console.log(error.response);
         });
     }
