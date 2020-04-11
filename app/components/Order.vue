@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import store from '../store/index.js';
+
 export default {
   props: {
     index: Number,
@@ -25,7 +27,7 @@ export default {
   methods: {
     addToDeliverables() {
       this.state = "accepted";
-      this.$store.dispatch("confirmDelivery");
+      store.dispatch("confirmDelivery");
       this.$emit("confirmOrder", this.index);
     },
     removeFromOrders() {
