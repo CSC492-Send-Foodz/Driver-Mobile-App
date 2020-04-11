@@ -18,8 +18,6 @@ LocalNotifications.addOnMessageReceivedCallback(notif => {
   });
 })
 
-var curToken;
-
 firebase
   .init({
     showNotifications: true,
@@ -81,10 +79,12 @@ export default new Vuex.Store({
 
   mutations: {
     bindActiveOrders({ commit }) {
+
       this.state.activeOrders = [];
       db.collection("Orders").where("status", "==", "Looking For Driver").get().then(orders => {
         orders.forEach(order => {
           let orderData = order.data();
+          console.log(orderData);
           if (orderData.quantity <= this.state.driverCapacity) {
             this.state.activeOrders.push(order.data());
           }
