@@ -23,8 +23,8 @@ const isPlayground = true; // change this to show card view on android when buil
 
 export default {
   created() {
-    this.$store.dispatch("login");
-    this.$store.commit("bindActiveOrders");
+    store.dispatch("login");
+    store.commit("bindActiveOrders");
   },
   mounted() {
     this.items = this.getActiveOrders();

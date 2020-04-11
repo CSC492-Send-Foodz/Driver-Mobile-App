@@ -53,7 +53,7 @@
 
 <script>
 import App from "./App.vue"
-import { mapMutations, mapActions } from "vuex";
+import store from "../store/index"
 
 const userService = {
     register(user) {
@@ -83,8 +83,6 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["postAccountUpdate"]),
-
         toggleForm() {
             this.isLoggingIn = !this.isLoggingIn;
         },
@@ -136,7 +134,7 @@ export default {
 
         },
         post(){
-            this.postAccountUpdate([
+            store.dispatch("postAccountUpdate", [
                 this.additional.name,
                 this.additional.capacity
             ])
