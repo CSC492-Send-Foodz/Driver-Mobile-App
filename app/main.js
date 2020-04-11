@@ -1,4 +1,5 @@
 import Vue from 'nativescript-vue'
+import { TNSFontIcon, fonticon } from 'nativescript-fonticon';
 import LoginPage from './components/LoginPage'
 import store from './store/index.js'
 

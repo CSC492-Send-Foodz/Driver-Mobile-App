@@ -18,8 +18,6 @@ LocalNotifications.addOnMessageReceivedCallback(notif => {
   });
 })
 
-var curToken;
-
 firebase
   .init({
     showNotifications: true,
