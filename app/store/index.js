@@ -115,6 +115,24 @@ export default new Vuex.Store({
         .catch(error => {
           console.log(error.response);
         });
+    },
+    postAccountUpdate(context, payload) {
+      console.log(payload)
+      const config = {
+        headers: { Authorization: `Bearer ${this.state.authToken}` }
+      };
+			const data = {
+        name: payload[0],
+        capacity: payload[1],
+        id: this.state.id
+      };
+      
+      console.log(data)
+
+      axios.post(BASE_URL + "/driver/updateUserAccount", data, config)
+      .catch(error => {
+        console.log("error!error!error!")
+        console.log(error.response)});
+      }
     }
-  }
 });

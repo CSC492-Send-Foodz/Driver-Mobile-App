@@ -1,6 +1,6 @@
 import Vue from 'nativescript-vue'
-import App from './components/App'
-//import { TNSFontIcon, fonticon } from 'nativescript-fonticon';
+import LoginPage from './components/LoginPage'
+import { TNSFontIcon, fonticon } from 'nativescript-fonticon'
 
 import store from './store/index.js'
 
@@ -24,5 +24,5 @@ Vue.registerElement(
 
 new Vue({
   store,
-  render: h => h('frame', [h(App)])
+  render: h => h('frame', [h(LoginPage)])
 }).$start()
