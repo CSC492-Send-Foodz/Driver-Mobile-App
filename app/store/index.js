@@ -91,19 +91,21 @@ export default new Vuex.Store({
   },
 
   actions: {
-    login({ commit }) {
+    login({ commit, payload }) {
       firebase
         .login({
           type: firebase.LoginType.PASSWORD,
           passwordOptions: {
-            email: "nelnour90@gmail.com",
-            password: "pipchin32!"
+            email: payload[0],
+            password: payload[1]
           }
         })
         .catch(error => console.log(error));
 
       //console.log("log in successful authorization token set");
+      },
 
+      createToken({commit}){
       firebase.getAuthToken({ forceRefresh: false }).then(token => {
         this.state.authToken = token.token;
 
@@ -144,7 +146,7 @@ export default new Vuex.Store({
       
       console.log("postAccountUpdate WORKED!!");
       },
-    
+/**     
       signin(context, payload) {
         firebase.auth().setPersistence(firebase.default.auth.Auth.Persistence.SESSION).then(async function () {
           return firebase.auth().signInWithEmailAndPassword(payload[0], payload[1])
@@ -157,7 +159,7 @@ export default new Vuex.Store({
             });
         });
       },
- /**     
+     
       signup(email, password) {
         return db.auth().createUserWithEmailAndPassword(email, password)
           .catch(error => {

@@ -111,13 +111,13 @@ export default {
         },
 
         login() {
-            /** 
-            store.dispatch("signin", [this.user.email, this.user.password])
+            
+            store.dispatch("login", [this.user.email, this.user.password])
             .then(() => {
                 this.$navigateTo(App);
             })
-            **/
-             
+            
+             /** 
             userService
                 .login(this.user)
                 .then(() => {
@@ -126,7 +126,7 @@ export default {
                 .catch(() => {
                     this.alert("Unfortunately we could not find your account.");
                 });
-                
+             **/   
         }
         ,
 
