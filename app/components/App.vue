@@ -50,12 +50,16 @@
 import InventoryInfo from "../components/InventoryInfo";
 import FabButton from "../templates/FabButton";
 import FabItem from "../templates/FabItem";
+import store from "../store/index"
 
 const app = require("tns-core-modules/application");
 const platform = require("tns-core-modules/platform");
 
 
 export default {
+  created() {
+    store.commit("bindActiveOrders");
+  },
   data() {
     return {
       isActive: false,
@@ -90,9 +94,7 @@ export default {
       }
     },
     route(page) {
-      console.log(page)
       this.display = page
-      console.log(this.display);
     },
     onButtonTap(args) {
       this.isActive = !this.isActive;

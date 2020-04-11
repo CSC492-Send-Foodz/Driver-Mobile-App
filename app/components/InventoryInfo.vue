@@ -21,13 +21,11 @@ import Order from "./Order";
 
 export default {
   created() {
-    store.commit("bindActiveOrders");
-    console.log("created")
+    //store.commit("bindActiveOrders");
   },
 
   mounted() {
     this.items = this.getActiveOrders();
-    console.log("getting orders")
   },
 
   components: {
@@ -42,7 +40,6 @@ export default {
 
   methods: {
     getActiveOrders() {
-      console.log("getting ordes")
       return store.getters.getActiveOrders;
     },
 
