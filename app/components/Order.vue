@@ -1,13 +1,21 @@
 <template>
   <CardView class="card" elevation="40" radius="10" ios:shadowRadius="0">
     <StackLayout>
-      <Label class="h4" textWrap="true">
+      <Label class="h4" textWrap="true" alignSelf="center">
         Grocery Store: {{ item.groceryStoreId }}
       </Label>
-      <Label class="h4" textWrap="true">
+      <Label class="h4" textWrap="true" alignSelf="center">
         Food Bank: {{ item.foodBankId }}
       </Label>
-      <Label class="h4" textWrap="true"> Qty: {{ item.quantity }}</Label>
+
+        <Label class="h4" textWrap="true" alignSelf="center">
+        Order ID: {{ item.id }}
+      </Label>
+
+      <Label class="h4" textWrap="true" alignSelf="center"> 
+        Qty: {{ item.quantity }}
+        </Label>
+
       <Button @tap="addToDeliverables">Add</Button>
       <Button @tap="removeFromOrders">Remove</Button>
     </StackLayout>

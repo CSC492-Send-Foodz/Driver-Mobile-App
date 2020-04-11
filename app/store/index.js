@@ -12,7 +12,7 @@ LocalNotifications.hasPermission();
 LocalNotifications.addOnMessageReceivedCallback(notif => {
   console.log(notif)
   dialogs.alert({
-    title: "Order Pick-up",
+    title: notif,
     message: "yayyy!!",
     okButtonText: "Yay!"
   });

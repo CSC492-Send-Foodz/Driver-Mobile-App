@@ -1,5 +1,6 @@
 <template>
   <Page actionBarHidden="true">
+    <ScrollView>
     <FlexboxLayout class="page">
       <StackLayout class="form">
         <Image class="logo" src="~/images/logo.png" />
@@ -107,6 +108,7 @@
         </FormattedString>
       </Label>
     </FlexboxLayout>
+    </ScrollView>
   </Page>
 </template>
 
