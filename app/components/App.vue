@@ -104,6 +104,7 @@ export default {
     InventoryInfo
   }
 };
+
 </script>
 
 <style scoped>

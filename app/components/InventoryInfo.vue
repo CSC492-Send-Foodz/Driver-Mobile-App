@@ -24,23 +24,28 @@ export default {
     store.commit("bindActiveOrders");
     console.log("created")
   },
+
   mounted() {
     this.items = this.getActiveOrders();
     console.log("getting orders")
   },
+
   components: {
     Order
   },
+
   data() {
     return {
       items: []
     };
   },
+
   methods: {
     getActiveOrders() {
       console.log("getting ordes")
       return store.getters.getActiveOrders;
     },
+
     removeItem(idx) {
       this.items.splice(idx, 1);
     }
