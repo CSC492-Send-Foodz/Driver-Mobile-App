@@ -23,7 +23,7 @@ const isPlayground = true; // change this to show card view on android when buil
 
 export default {
   created() {
-    //store.dispatch("login");
+    store.dispatch("login");
     store.commit("bindActiveOrders");
   },
 
@@ -43,7 +43,7 @@ export default {
 
   methods: {
     getActiveOrders() {
-      return this.$store.getters.getActiveOrders;
+      return store.getters.getActiveOrders;
     },
 
     removeItem(idx) {

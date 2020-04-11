@@ -1,8 +1,22 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from "axios";
+import axios from 'axios';
+import { LocalNotifications } from 'nativescript-local-notifications'
 
 const firebase = require("nativescript-plugin-firebase");
+var dialogs = require("tns-core-modules/ui/dialogs")
+var curToken;
+
+LocalNotifications.hasPermission();
+
+LocalNotifications.addOnMessageReceivedCallback(notif => {
+  console.log(notif)
+  dialogs.alert({
+    title: "Order Pick-up",
+    message: "yayyy!!",
+    okButtonText: "Yay!"
+  });
+})
 
 var curToken;
 
@@ -10,12 +24,16 @@ firebase
   .init({
     showNotifications: true,
     showNotificationsWhenInForeground: true,
-    onPushTokenReceivedCallback: (token) => {
-      console.log('Push Token :', { token });
+    onPushTokenReceivedCallback: token => {
       curToken = token;
+      console.log(curToken);
     },
     onMessageReceivedCallback: (message) => {
-      console.log('Message received :', { message });
+      dialogs.alert({
+        title: "Order pick-up",
+        message: message,
+        okButtonText: "Yay!"
+      });
     },
     apiKey: "AIzaSyCMvoPbVC1na4E8L8rtPQrmK-gVuldeTSo",
     authDomain: "send-foodz-1a677.firebaseio.com",

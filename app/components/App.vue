@@ -17,7 +17,7 @@
       </TabContentItem>
 
       <TabContentItem>
-        <InventoryInfo @deletedItem="logDeletion" />
+        <InventoryInfo />
       </TabContentItem>
     </BottomNavigation>
   </Page>
@@ -33,11 +33,6 @@ export default {
   },
   data() {
     return {};
-  },
-  methods: {
-    logDeletion(mssg) {
-      console.log(mssg);
-    }
   }
 };
 
