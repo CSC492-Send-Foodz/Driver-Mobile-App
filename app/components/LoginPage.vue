@@ -1,5 +1,6 @@
 <template>
   <Page actionBarHidden="true">
+    <ScrollView>
     <FlexboxLayout class="page">
       <StackLayout class="form">
         <Image class="logo" src="~/images/logo.png" />
@@ -107,6 +108,7 @@
         </FormattedString>
       </Label>
     </FlexboxLayout>
+    </ScrollView>
   </Page>
 </template>
 
@@ -127,6 +129,10 @@ const userService = {
 };
 
 export default {
+  mounted() {
+    //store.dispatch("login");
+    store.dispatch("createToken");
+  },
   data() {
     return {
       isLoggingIn: true,
@@ -160,8 +166,7 @@ export default {
     },
 
     login() {
-      //store.dispatch("login")
-      console.log("logging in");
+      store.dispatch("login");
       userService
         .login(this.user)
         .then(() => {
@@ -251,7 +256,7 @@ export default {
 
 <style scoped>
 .logo {
-    width: 80%;
+  width: 80%;
 }
 
 .page {
@@ -315,8 +320,7 @@ TextField .input {
   margin-bottom: 20;
 }
 
-.bold{
-    color: black;
+.bold {
+  color: black;
 }
-
 </style>
