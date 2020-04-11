@@ -18,12 +18,17 @@
 import store from '../store/index.js';
 
 export default {
+
   props: {
     index: Number,
     item: Object,
     state: String
   },
-  data() {},
+
+  data() {
+
+  },
+
   methods: {
     addToDeliverables() {
       this.state = "accepted";

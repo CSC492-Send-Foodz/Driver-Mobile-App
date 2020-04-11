@@ -26,21 +26,26 @@ export default {
     store.dispatch("login");
     store.commit("bindActiveOrders");
   },
+
   mounted() {
     this.items = this.getActiveOrders();
   },
+
   components: {
     Order
   },
+
   data() {
     return {
       items: []
     };
   },
+
   methods: {
     getActiveOrders() {
       return store.getters.getActiveOrders;
     },
+
     removeItem(idx) {
       this.items.splice(idx, 1);
     }
