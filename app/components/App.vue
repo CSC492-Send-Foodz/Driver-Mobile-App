@@ -37,10 +37,10 @@ export default {
   methods: {
     logDeletion(mssg) {
       console.log(mssg);
-      console.log("test logging");
     }
   }
 };
+
 </script>
 
 <style lang="scss" scoped>

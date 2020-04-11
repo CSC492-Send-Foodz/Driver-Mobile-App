@@ -54,6 +54,8 @@
 <script>
 import App from "./App.vue"
 import { mapMutations, mapActions } from "vuex";
+import firebase from "../store/index";
+import store from "../store/index.js"
 
 const userService = {
     register(user) {
@@ -82,14 +84,18 @@ export default {
             }
         };
     },
+    mounted(){
+        store.dispatch("login");
+    },
     methods: {
-        ...mapActions(["postAccountUpdate"]),
+        //...mapActions(["postAccountUpdate", "login"]),
 
         toggleForm() {
             this.isLoggingIn = !this.isLoggingIn;
         },
 
         submit() {
+            
             if (!this.user.email || !this.user.password) {
                 this.alert(
                     "Please provide both an email address and password."
@@ -105,6 +111,13 @@ export default {
         },
 
         login() {
+            /** 
+            store.dispatch("signin", [this.user.email, this.user.password])
+            .then(() => {
+                this.$navigateTo(App);
+            })
+            **/
+             
             userService
                 .login(this.user)
                 .then(() => {
@@ -113,7 +126,9 @@ export default {
                 .catch(() => {
                     this.alert("Unfortunately we could not find your account.");
                 });
-        },
+                
+        }
+        ,
 
         register() {
             if (this.user.password != this.user.confirmPassword) {
@@ -132,10 +147,13 @@ export default {
                         "Unfortunately we were unable to create your account."
                     );
                 });
-
-
         },
         post(){
+            store.dispatch("postAccountUpdate", ([
+                this.additional.name,
+                this.additional.capacity
+            ]));
+            /**
             this.postAccountUpdate([
                 this.additional.name,
                 this.additional.capacity
@@ -146,8 +164,8 @@ export default {
             .catch(error => {
               console.log("Error", error);        
             });
+            **/
         },
-
         forgotPassword() {
             prompt({
                 title: "Forgot Password",
@@ -174,16 +192,15 @@ export default {
                 }
             });
         },
-
         focusPassword() {
             this.$refs.password.nativeView.focus();
         },
+
         focusConfirmPassword() {
             if (!this.isLoggingIn) {
                 this.$refs.confirmPassword.nativeView.focus();
             }
         },
-
         alert(message) {
             return alert({
                 title: "Senz Foodz",

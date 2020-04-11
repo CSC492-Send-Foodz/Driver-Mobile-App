@@ -4,8 +4,19 @@ import axios from "axios";
 
 const firebase = require("nativescript-plugin-firebase");
 
+var curToken;
+
 firebase
   .init({
+    showNotifications: true,
+    showNotificationsWhenInForeground: true,
+    onPushTokenReceivedCallback: (token) => {
+      console.log('Push Token :', { token });
+      curToken = token;
+    },
+    onMessageReceivedCallback: (message) => {
+      console.log('Message received :', { message });
+    },
     apiKey: "AIzaSyCMvoPbVC1na4E8L8rtPQrmK-gVuldeTSo",
     authDomain: "send-foodz-1a677.firebaseio.com",
     databaseURL: "https://send-foodz-1a677.firebaseio.com",
@@ -15,7 +26,6 @@ firebase
   .then(
     function () {
       console.log("firebase initialized!");
-      console.log("connected!");
     },
     function (err) {
       console.log("firebase init error: ", err);
@@ -31,16 +41,22 @@ export default new Vuex.Store({
   state: {
     email: "nelnour90@gmail.com",
     password: "pipchin32!",
-    id: "4420",
+    id: "1111",
     authToken: "",
     driverCapacity: "10",
     activeOrders: [],
   },
+
   getters: {
     getActiveOrders: (state) => {
       return state.activeOrders;
+    },
+
+    getAuthToken: (state) => {
+      return state.authToken;
     }
   },
+
   mutations: {
     bindActiveOrders({ commit }) {
       db.collection("Orders").where("status", "==", "Looking For Driver").get().then(orders => {
@@ -54,6 +70,7 @@ export default new Vuex.Store({
       )
     },
   },
+
   actions: {
     login({ commit }) {
       firebase
@@ -66,8 +83,12 @@ export default new Vuex.Store({
         })
         .catch(error => console.log(error));
 
+      //console.log("log in successful authorization token set");
+
       firebase.getAuthToken({ forceRefresh: false }).then(token => {
         this.state.authToken = token.token;
+
+      //console.log("this is the new authToken", this.state.authToken);
       });
     },
 
@@ -78,18 +99,18 @@ export default new Vuex.Store({
 
       const payload = {
         id: this.state.id,
-        newStatus: "Inventory picked up"
+        status: "Unavailable",
+        token: curToken
       };
 
       axios
         .post(BASE_URL + "/driver/statusUpdate", payload, config)
         .catch(error => {
-          console.log("error")
           console.log(error.response);
         });
     },
+
     postAccountUpdate(context, payload) {
-      console.log(payload)
       const config = {
         headers: { Authorization: `Bearer ${this.state.authToken}` }
       };
@@ -98,13 +119,32 @@ export default new Vuex.Store({
         capacity: payload[1],
         id: this.state.id
       };
-      
-      console.log(data)
-
       axios.post(BASE_URL + "/driver/updateUserAccount", data, config)
       .catch(error => {
-        console.log("error!error!error!")
         console.log(error.response)});
+      
+      console.log("postAccountUpdate WORKED!!");
+      },
+    
+      signin(context, payload) {
+        firebase.auth().setPersistence(firebase.default.auth.Auth.Persistence.SESSION).then(async function () {
+          return firebase.auth().signInWithEmailAndPassword(payload[0], payload[1])
+            .catch(error => {
+              if (error.code === "auth/wrong-password") {
+                return "Login Failed";
+              } else {
+                return "Something went wrong. Try again later";
+              }
+            });
+        });
+      },
+ /**     
+      signup(email, password) {
+        return db.auth().createUserWithEmailAndPassword(email, password)
+          .catch(error => {
+            return error.message;
+          });
       }
+**/
     }
 });
