@@ -18,7 +18,7 @@
     "@nativescript/theme": "^2.3.3",
     "@nstudio/nativescript-cardview": "^1.0.0",
     "axios": "^0.19.2",
-    "firebase-admin": "^8.10.0",
+    "firebase-admin": "^11.4.1",
     "nativescript-audio": "^5.0.5",
     "nativescript-fonticon": "^2.0.0",
     "nativescript-local-notifications": "^4.2.1",
